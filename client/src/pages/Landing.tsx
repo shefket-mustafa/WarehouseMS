@@ -80,7 +80,48 @@ const Landing = () => {
             </p>
           </div>
           {/* Card 3 ending */}
+
+          {/* Card 4 */}
+          <div className="rounded-xl border border-slate-800 bg-slate-900/70 p-6 shadow-lg">
+            <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-cyan-500/20">
+              <FiBarChart className="h-6 w-6 text-cyan-400" />
+            </div>
+            <h3 className="mb-2 text-lg font-semibold text-slate-50">
+              Order Processing Automation
+            </h3>
+            <p className="text-sm text-slate-300">
+             Streamline order fulfillment with automated picking, packing, and shipping workflows to reduce errors and speed up delivery times.
+            </p>
+          </div>
+
+          {/* Card 5 */}
+          <div className="rounded-xl border border-slate-800 bg-slate-900/70 p-6 shadow-lg">
+            <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-cyan-500/20">
+              <FiBarChart className="h-6 w-6 text-cyan-400" />
+            </div>
+            <h3 className="mb-2 text-lg font-semibold text-slate-50">
+              Warehouse Optimization
+            </h3>
+            <p className="text-sm text-slate-300">
+              Maximize storage efficiency with intelligent slotting, layout planning, and tools that adapt to changes in demand and inventory flow.
+            </p>
+          </div>
+
+          {/* Card 6 */}
+          <div className="rounded-xl border border-slate-800 bg-slate-900/70 p-6 shadow-lg">
+            <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-cyan-500/20">
+              <FiBarChart className="h-6 w-6 text-cyan-400" />
+            </div>
+            <h3 className="mb-2 text-lg font-semibold text-slate-50">
+              Staff Performance Tracking
+            </h3>
+            <p className="text-sm text-slate-300">
+            Monitor productivity, assign tasks efficiently, and gain insights into workforce performance to keep your warehouse running smoothly.
+            </p>
+          </div>
         </div>
+
+        
       </section>
       {/* Features ending */}
 
