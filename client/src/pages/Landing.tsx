@@ -1,6 +1,9 @@
 import { Link } from "react-router";
 import { FiPackage, FiTrendingUp, FiUsers, FiBarChart } from "react-icons/fi";
 import ExploreCard from "../components/ExploreCard";
+import Carousel from "../components/Carousel";
+
+
 
 const Landing = () => {
   return (
@@ -143,9 +146,15 @@ const Landing = () => {
       title="What is warehouse automation?"
       subtitle="Learn how warehouse automation can help take the guesswork and bottlenecks out of warehouse management by empowering your teams with data, insights, and streamlined processes. "
       />
-
-      
     </div>
+      </section>
+      {/* Explore ends */}
+
+
+      {/* Partners */}
+      <section className="h-65 w-full bg-slate-400">
+
+    <Carousel />
 
       </section>
 

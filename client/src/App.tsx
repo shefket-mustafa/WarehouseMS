@@ -13,12 +13,14 @@ import Tools from "./pages/Tools";
 // import ProtectedRoute from "./components/ProtectedRoute";
 import NotFound from "./pages/NotFound";
 import MainLayout from "./layouts/MainLayout";
+import ScrollToTop from "./lib/ScrollToTop";
 
 const queryClient = new QueryClient();
 
 const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
+      <ScrollToTop />
         <AuthProvider>
           <DataProvider>
             <MainLayout>
