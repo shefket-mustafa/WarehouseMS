@@ -12,6 +12,7 @@ import CategoriesBrands from "./pages/CategoriesBrands";
 import Tools from "./pages/Tools";
 // import ProtectedRoute from "./components/ProtectedRoute";
 import NotFound from "./pages/NotFound";
+import MainLayout from "./layouts/MainLayout";
 
 const queryClient = new QueryClient();
 
@@ -20,6 +21,7 @@ const App = () => {
     <QueryClientProvider client={queryClient}>
         <AuthProvider>
           <DataProvider>
+            <MainLayout>
             <Routes>
               <Route path="/" element={<Landing />} />
               <Route path="/login" element={<Login />} />
@@ -66,6 +68,7 @@ const App = () => {
               />
               <Route path="*" element={<NotFound />} />
             </Routes>
+            </MainLayout>
           </DataProvider>
         </AuthProvider>
     </QueryClientProvider>

@@ -1,16 +1,14 @@
 import { Link } from "react-router";
 import { FiPackage, FiTrendingUp, FiUsers, FiBarChart } from "react-icons/fi";
-import Navbar from "../components/Navbar";
 
 const Landing = () => {
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100">
-      <Navbar />
       {/* Hero Section */}
       <section className="bg-linear-to-br from-emerald-500 via-cyan-500 to-sky-500 text-white">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-20">
           <div className="text-center">
-            <div className="mb-6 flex items-center justify-center gap-3">
+            <div className="mb-6 flex items-center justify-center gap-3"> 
               <FiPackage className="h-16 w-16 drop-shadow-lg" />
               <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight drop-shadow">
                 WarehouseMS

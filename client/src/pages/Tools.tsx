@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { TextField, Button } from '@mui/material';
 import { FiDownload, FiFileText, FiShoppingCart, FiPackage } from 'react-icons/fi';
-import Navbar from '../components/Navbar';
 import jsPDF from 'jspdf';
 import { useData } from '../context/dataContext-hook';
 
@@ -48,7 +47,6 @@ const Tools = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      <Navbar />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="mb-6">
           <h1 className="text-3xl font-bold text-foreground mb-2">Tools</h1>

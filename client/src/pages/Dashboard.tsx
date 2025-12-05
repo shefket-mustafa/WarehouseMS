@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { TextField, MenuItem, Select, FormControl, InputLabel } from '@mui/material';
 import { FiSearch } from 'react-icons/fi';
-import Navbar from '../components/Navbar';
 import { useData } from '../context/dataContext-hook';
 
 const Dashboard = () => {
@@ -32,7 +31,6 @@ const Dashboard = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      <Navbar />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="mb-6">
           <h1 className="text-3xl font-bold text-foreground mb-2">Dashboard</h1>
