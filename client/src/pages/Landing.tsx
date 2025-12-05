@@ -1,5 +1,6 @@
 import { Link } from "react-router";
 import { FiPackage, FiTrendingUp, FiUsers, FiBarChart } from "react-icons/fi";
+import ExploreCard from "../components/ExploreCard";
 
 const Landing = () => {
   return (
@@ -78,8 +79,36 @@ const Landing = () => {
               real data, not guesswork.
             </p>
           </div>
+          {/* Card 3 ending */}
         </div>
       </section>
+      {/* Features ending */}
+
+      {/* Explore WMS Software */}
+      <section className="py-10 ">
+    {/* <h1 className="text-center text-2xl py-10">Explore</h1> */}
+    
+  
+    <div className="flex justify-around py-10">
+
+      <ExploreCard 
+      img="https://content.cdn.sap.com/is/image/sap/282072:3840x2160?wid=685&hei=385&fit=stretch,1&resMode=sharp2"
+      title="Explore WMS software"
+      subtitle="Keep up with changing demand, lower cost with SAP Extended Warehouse Management."
+      />
+
+       <ExploreCard 
+      img="https://content.cdn.sap.com/is/image/sap/285010:3840x2160?wid=685&hei=385&fit=stretch,1&resMode=sharp2"
+      title="What is warehouse automation?"
+      subtitle="Learn how warehouse automation can help take the guesswork and bottlenecks out of warehouse management by empowering your teams with data, insights, and streamlined processes. "
+      />
+
+      
+    </div>
+
+      </section>
+
+
     </div>
   );
 };
