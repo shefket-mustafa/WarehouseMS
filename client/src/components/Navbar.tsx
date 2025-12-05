@@ -17,7 +17,7 @@ const Navbar = () => {
   const isActive = (path: string) => location.pathname === path;
 
   return (
-    <nav className="bg-card border-b border-border shadow-sm">
+    <nav className="bg-card border-b border-border shadow-sm bg-slate-950 text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center gap-8">
@@ -31,7 +31,7 @@ const Navbar = () => {
                 <Link
                   key={link.path}
                   to={link.path}
-                  className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
+                  className={`px-4 py-2 rounded-md text-sm font-medium hover:text-amber-300 transition-colors ${
                     isActive(link.path)
                       ? 'bg-primary text-primary-foreground'
                       : 'text-foreground hover:bg-accent hover:text-accent-foreground'
@@ -45,7 +45,7 @@ const Navbar = () => {
 
           <div className="flex items-center gap-4">
             <div className="text-right">
-              <p className="text-sm font-semibold text-foreground">{user?.firmName}</p>
+              <p className="text-sm font-semibold text-foreground">{user?.id}</p>
               <p className="text-xs text-muted-foreground">{user?.email}</p>
             </div>
             <button
