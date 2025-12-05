@@ -4,6 +4,7 @@ import { AuthContext } from './authContext-hook';
 interface User {
   id: string;
   email: string;
+  companyName: string
 }
 
 export interface AuthContextType {
@@ -23,17 +24,21 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   });
 
   const login = async (email: string, password: string) => {
-    // Simulate login - in real app, this would call an API
-    const userData = { id: '1', email };
-    setUser(userData);
-    localStorage.setItem('wms_user', JSON.stringify(userData));
+    console.log(email, password);
+    
+    // // Simulate login - in real app, this would call an API
+    // const userData = { id: '1', email };
+    // setUser(userData);
+    // localStorage.setItem('wms_user', JSON.stringify(userData));
   };
 
-  const register = async (email: string, password: string, firmName: string) => {
-    // Simulate registration - in real app, this would call an API
-    const userData = { id: '1', email, firmName };
-    setUser(userData);
-    localStorage.setItem('wms_user', JSON.stringify(userData));
+  const register = async (email: string, password: string, companyName: string) => {
+    console.log(email, password, companyName);
+    
+    // // Simulate registration - in real app, this would call an API
+    // const userData = { id: '1', email, firmName };
+    // setUser(userData);
+    // localStorage.setItem('wms_user', JSON.stringify(userData));
   };
 
   const logout = () => {
