@@ -88,7 +88,7 @@ relative">
           </button>
         </form>
 
-        <p className="text-center text-white mt-6 text-sm text-muted-foreground">
+        <p className="text-center text-white mt-6 text-sm text-muted-foreground relative z-10">
           Don't have an account?{' '}
           <Link to="/register" className="text-primary text-amber-300 hover:underline font-medium">
             Register here
