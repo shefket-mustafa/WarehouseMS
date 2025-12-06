@@ -25,8 +25,8 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background flex items-center justify-center p-4">
-      <div className="bg-card rounded-lg shadow-lg p-8 w-full max-w-md border border-border">
+    <div className="min-h-screen bg-background flex items-center justify-center p-4 bg-linear-to-br from-slate-200 via-slate-100 to-white">
+      <div className="bg-card rounded-lg shadow-lg p-8 w-full max-w-md border bg-linear-to-br from-slate-700">
         <div className="flex items-center justify-center gap-2 mb-8">
           <FiPackage className="w-10 h-10 text-primary" />
           <h1 className="text-3xl font-bold text-foreground">WarehouseMS</h1>
