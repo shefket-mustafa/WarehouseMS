@@ -7,7 +7,7 @@ import { useAuth } from '../context/authContext-hook';
 const Register = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [companyName] = useState('');
+  const [companyName, setCompanyName] = useState('');
   const [loading, setLoading] = useState(false);
   const { register } = useAuth();
   const navigate = useNavigate();
@@ -17,9 +17,9 @@ const Register = () => {
     setLoading(true);
     try {
       await register(email, password, companyName);
-      navigate('/login');
+      navigate('/dashboard');
     } catch (error) {
-      console.error('Registration failed:', error);
+      console.error('Login failed:', error);
     } finally {
       setLoading(false);
     }
@@ -47,6 +47,22 @@ relative">
         </h2>
 
        <form onSubmit={handleSubmit} className="space-y-5 text-white relative z-10">
+         {/* Company Name */}
+          <div className="flex flex-col">
+            <label className="text-sm font-medium text-start mb-1 text-foreground">Company Name</label>
+            <input
+              type="text"
+              className="
+                w-full px-3 py-2 rounded-md
+                bg-card border border-borde bg-white  text-foreground
+                focus:outline-none focus:ring-2 focus:ring-primary
+              "
+              value={companyName}
+              onChange={(e) => setCompanyName(e.target.value)}
+              required
+            />
+          </div>
+
           {/* EMAIL */}
           <div className="flex flex-col">
             <label className="text-sm font-medium text-start mb-1 text-foreground">Email</label>
@@ -57,7 +73,6 @@ relative">
                 bg-card border border-border text-foreground
                 focus:outline-none focus:ring-2 focus:ring-primary
               "
-              value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
             />
@@ -73,7 +88,6 @@ relative">
                 bg-card border border-border text-foreground
                 focus:outline-none focus:ring-2 focus:ring-primary
               "
-              value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
             />
@@ -89,10 +103,10 @@ relative">
           </button>
         </form>
 
-        <p className="text-center text-white mt-6 text-sm text-muted-foreground">
-          Don't have an account?{' '}
-          <Link to="/register" className="text-primary text-amber-300 hover:underline font-medium">
-            Register here
+        <p className="text-center text-white mt-6 text-sm text-muted-foreground relative z-10">
+          Already have an account?{' '}
+          <Link to="/login" className="text-primary text-amber-300 hover:underline font-medium">
+            Sign in here
           </Link>
         </p>
       </div>
