@@ -5,7 +5,7 @@ import { Link } from "react-router";
 export default function Footer() {
   return (
     <>
-      <main className="flex py-5 flex-col md:flex-row items-center  md:justify-around border-slate-300 w-full md:h-45 text-xs bg-slate-900 text-white px-20 pt-2">
+      <main className="flex py-5 mt-10 flex-col md:flex-row items-center  md:justify-around border-slate-300 w-full md:h-45 text-xs bg-slate-900 text-white px-20 pt-2">
         {/* Navigation */}
         <nav className="flex flex-col gap-1">
           <h1 className="text-lg font-bold text-amber-300">Navigation</h1>

@@ -1,2 +1,16 @@
 @import "tailwindcss";
+@config "../tailwind.config.js";
+
+.partners-marquee {
+  display: flex;
+  gap: 5rem;              /* space between logos */
+  width: max-content; /* ensure the inner track doesn't wrap */
+  will-change: transform;
+}
+
+/* JS-driven marquee now controls the transform. Remove CSS animation to avoid conflicts. */
+/* ensure images don't shrink and keep consistent spacing */
+.partners-marquee img {
+  flex: 0 0 auto;
+}
 
