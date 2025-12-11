@@ -2,21 +2,18 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router';
 import { CircularProgress } from '@mui/material';
 import { FiPackage } from 'react-icons/fi';
-import { useAuth } from '../context/authContext-hook';
+// import { useAuth } from '../context/authContext09lk;'-hook';
 
 const Register = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [companyName] = useState('');
   const [loading, setLoading] = useState(false);
-  const { register } = useAuth();
+  // const { register } = useAuth();
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     try {
-      await register(email, password, companyName);
+      // await register();
       navigate('/login');
     } catch (error) {
       console.error('Registration failed:', error);
@@ -57,9 +54,6 @@ relative">
                 bg-card border border-border text-foreground
                 focus:outline-none focus:ring-2 focus:ring-primary
               "
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
             />
           </div>
 
@@ -73,9 +67,6 @@ relative">
                 bg-card border border-border text-foreground
                 focus:outline-none focus:ring-2 focus:ring-primary
               "
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
             />
           </div>
 
