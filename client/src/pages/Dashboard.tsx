@@ -52,6 +52,9 @@ const Dashboard = () => {
               />
             </div>
 
+            <div className='flex'>
+            <button className='border rounded-sm  border-border border-gray-400 px-6 hover:border-gray-800 cursor-pointer'>Add item +</button>
+
             <FormControl size="small" className="ml-4! min-w-[150px]!">
               <InputLabel>Show entries</InputLabel>
               <Select
@@ -65,6 +68,7 @@ const Dashboard = () => {
                 <MenuItem value={50}>50</MenuItem>
               </Select>
             </FormControl>
+            </div>
           </div>
 
           <div className="overflow-x-auto">
