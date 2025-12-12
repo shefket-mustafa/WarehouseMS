@@ -7,6 +7,7 @@ const CategoriesBrands = () => {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [selectedBrand, setSelectedBrand] = useState<string | null>(null);
 
+
   const filteredItems = inventory.filter((item) => {
     if (selectedCategory && item.category !== selectedCategory) return false;
     if (selectedBrand && !item.productName.toLowerCase().includes(selectedBrand.toLowerCase())) return false;
@@ -14,7 +15,7 @@ const CategoriesBrands = () => {
   });
 
   return (
-    <div className="min-h-screen bg-background bg-white">
+    <div className="relative min-h-screen bg-background bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="mb-6">
           <h1 className="text-3xl font-bold text-foreground mb-2">Categories & Brands</h1>
@@ -114,6 +115,55 @@ const CategoriesBrands = () => {
           </div>
         )}
       </div>
+      {/* Add item */}
+        <section className='flex flex-col justify-center items-center w-full '>
+          <h1 className='text-center text-3xl py-5 font-bold'>Add items</h1>
+ 
+          <form className='flex flex-col gap-2 mt-2 w-[500px] mb-10 py-5 items-center justify-center align-middle border px-20 border-border rounded-lg' >
+            <label>Product Name</label>
+            <input type="text" placeholder='Product Name' 
+            className='border border-border round p-1 w-full text-sm focus:otline-none focus:ring-2 focus:ring-primary rounded-sm'/>
+
+                        <label>Category</label>
+            <input type="text" placeholder='Category' 
+            className='border border-border round p-1 w-full text-sm focus:otline-none focus:ring-2 focus:ring-primary rounded-sm'/>
+
+                        <label>Sub Category</label>
+            <input type="text" placeholder='Sub Category' 
+            className='border border-border round p-1 w-full text-sm focus:otline-none focus:ring-2 focus:ring-primary rounded-sm'/>
+
+                        <label>Size</label>
+            <input type="text" placeholder='Size' 
+            className='border border-border round p-1 w-full text-sm focus:otline-none focus:ring-2 focus:ring-primary rounded-sm'/>
+
+
+                        <label>Code</label>
+            <input type="text" placeholder='Product Name' 
+            className='border border-border round p-1 w-full text-sm focus:otline-none focus:ring-2 focus:ring-primary rounded-sm'/>
+
+                        <label>Barcode</label>
+            <input type="text" placeholder='Barcode' 
+            className='border border-border round p-1 w-full text-sm focus:otline-none focus:ring-2 focus:ring-primary rounded-sm'/>
+
+                        <label>Quantity</label>
+            <input type="text" placeholder='Quantity' 
+            className='border border-border round p-1 w-full text-sm focus:otline-none focus:ring-2 focus:ring-primary rounded-sm'/>
+
+            <label >Status</label>
+            <select className='py-1 px-3 border border-border rounded-sm cursor-pointer'>
+              <option value="">1</option>
+              <option value="">2</option>
+              <option value="">3</option>
+            </select>
+
+
+          <div className='flex justify-end gap-5'>
+            <button className='bg-slate-900 text-white py-1 px-5 rounded-sm'>Save</button>
+            <button className='bg-slate-900 text-white py-1 px-5 rounded-sm'>Reset</button>
+          </div>
+          </form>
+
+        </section>
     </div>
   );
 };

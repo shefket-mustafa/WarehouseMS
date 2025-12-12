@@ -32,7 +32,7 @@ const Customers = () => {
                 onChange={(e) => setSearchTerm(e.target.value)}
                 variant="outlined"
                 size="small"
-                className="!pl-10"
+                className="pl-10"
               />
             </div>
           </div>
