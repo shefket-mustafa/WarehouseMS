@@ -117,7 +117,8 @@ const CategoriesBrands = () => {
       </div>
       {/* Add item */}
         <section className='flex flex-col justify-center items-center w-full '>
-          <h1 className='text-center text-3xl py-5 font-bold'>Add items</h1>
+          <h1 className='text-center text-3xl  font-bold'>Add items</h1>
+          <p className="text-muted-foreground py-2">Add products to the database</p>
  
           <form className='flex flex-col gap-2 mt-2 w-[500px] mb-10 py-5 items-center justify-center align-middle border px-20 border-border rounded-lg' >
             <label>Product Name</label>
@@ -151,9 +152,9 @@ const CategoriesBrands = () => {
 
             <label >Status</label>
             <select className='py-1 px-3 border border-border rounded-sm cursor-pointer'>
-              <option value="">1</option>
-              <option value="">2</option>
-              <option value="">3</option>
+              <option value="">Low Stock</option>
+              <option value="">Out of Stock</option>
+              <option value="">In Stock</option>
             </select>
 
 
