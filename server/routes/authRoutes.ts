@@ -63,9 +63,9 @@ console.log(SECRET);
         return res.status(400).json({message: "Invalid credentials!"})
     }
 
-    const companyName = user.companyName;
+    const companyName = user.companyName
     const token = jwt.sign({companyName}, SECRET as string, {expiresIn: "1d"});
-    res.json({token, companyName})
+    res.json({token, companyName, email})
   } catch (err) {
     res.status(500).json({ message: "Server error" });
   }

@@ -14,6 +14,8 @@ import Tools from "./pages/Tools";
 import NotFound from "./pages/NotFound";
 import MainLayout from "./layouts/MainLayout";
 import ScrollToTop from "./lib/ScrollToTop";
+import ProtectedRoute from "./components/ProtectedRoute";
+import ProtectedRouteForLoggedUsers from "./components/ProtectedRouteForLoggedUsers";
 
 const queryClient = new QueryClient();
 
@@ -25,13 +27,26 @@ const App = () => {
           <DataProvider>
             <MainLayout>
             <Routes>
-              <Route path="/" element={<Landing />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/register" element={<Register />} />
+              <Route path="/" element={
+                <Landing 
+                />} />
+              <Route path="/login" element={
+                <ProtectedRouteForLoggedUsers>
+                <Login
+                 />
+                 </ProtectedRouteForLoggedUsers>
+                 } 
+                 />
+              <Route path="/register" element={
+                <ProtectedRouteForLoggedUsers>
+                <Register 
+                />
+                </ProtectedRouteForLoggedUsers>
+                } />
               <Route
                 path="/dashboard"
                 element={
-                  // <ProtectedRoute>
+                  <ProtectedRoute>
                     <Dashboard />
                   // </ProtectedRoute>
                 }
@@ -39,7 +54,7 @@ const App = () => {
               <Route
                 path="/orders"
                 element={
-                  // <ProtectedRoute>
+                  <ProtectedRoute>
                     <Orders />
                   // </ProtectedRoute>
                 }
@@ -47,7 +62,7 @@ const App = () => {
               <Route
                 path="/customers"
                 element={
-                  // <ProtectedRoute>
+                  <ProtectedRoute>
                     <Customers />
                   // </ProtectedRoute>
                 }
@@ -55,7 +70,7 @@ const App = () => {
               <Route
                 path="/categories"
                 element={
-                  // <ProtectedRoute>
+                  <ProtectedRoute>
                     <CategoriesBrands />
                   // </ProtectedRoute>
                 }
@@ -63,7 +78,7 @@ const App = () => {
               <Route
                 path="/tools"
                 element={
-                  // <ProtectedRoute>
+                  <ProtectedRoute>
                     <Tools />
                   // </ProtectedRoute>
                 }

@@ -25,7 +25,7 @@ export interface AuthContextType {
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(() => {
     const savedUser = localStorage.getItem("user");
-    return savedUser ? JSON.parse(savedUser) : null;
+    return savedUser ? JSON.parse(savedUser) : null
   });
   const BASE_URL = import.meta.env.VITE_BASE_URL
 const navigate = useNavigate();
@@ -51,7 +51,7 @@ const navigate = useNavigate();
 
       navigate("/")
 
-       localStorage.setItem("user", result.companyName);
+       localStorage.setItem("user", JSON.stringify({companyName: result.companyName, email: result.email}));
       localStorage.setItem("token", result.token);
       setUser(result.companyName);
 
