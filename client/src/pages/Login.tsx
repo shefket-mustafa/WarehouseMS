@@ -1,27 +1,41 @@
-import { useState } from 'react';
-import { Link, useNavigate } from 'react-router';
+import { Link } from 'react-router';
 import { CircularProgress } from '@mui/material';
 import { FiPackage } from 'react-icons/fi';
 import { useAuth } from '../context/authContext-hook';
+import {useForm} from "react-hook-form"
+import { loginSchema, type LoginSchemaType } from '../zod-validator/loginSchema';
+import {zodResolver} from "@hookform/resolvers/zod"
 
 const Login = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [loading, setLoading] = useState(false);
   const { login } = useAuth();
-  const navigate = useNavigate();
+  const {
+    handleSubmit,
+    register,
+    formState: {isSubmitting, errors},
+    setError
+    
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setLoading(true);
+  } = useForm<LoginSchemaType>({resolver: zodResolver(loginSchema)});
+
+  const handleLogin = async (data: LoginSchemaType) => {
     try {
-      await login(email, password);
-      navigate('/dashboard');
+      const {email, password} = data;
+      const res = await login(email, password);
+      console.log(res);
+      
+
+      if(!res.ok){
+        setError("root", {message: "Invalid credentials!"});
+        return
+      }
     } catch (error) {
-      console.error('Login failed:', error);
-    } finally {
-      setLoading(false);
-    }
+      if(error instanceof Error){
+        setError("root", {message: error.message})
+
+      }else {
+        setError("root", {message: "Failed to login!"})
+      }
+    } 
   };
 
   return (
@@ -45,46 +59,49 @@ relative">
           Sign In
         </h2>
 
-       <form onSubmit={handleSubmit} className="space-y-5 text-white relative z-10">
+       <form onSubmit={handleSubmit(handleLogin)} className="space-y-5 flex flex-col text-white relative z-10">
           {/* EMAIL */}
-          <div className="flex flex-col">
+
+          {errors.root && (
+            <p className='text-sm text-red-500 mb-3 p-1 rounded-lg text-center'>{errors.root.message}</p>
+          )}
+
             <label className="text-sm font-medium text-start mb-1 text-foreground">Email</label>
             <input
+            {...register("email")}
               type="email"
               className="
-                w-full px-3 py-2 rounded-md
+                w-full px-3 py-2 rounded-md text-black bg-white
                 bg-card border border-border text-foreground
                 focus:outline-none focus:ring-2 focus:ring-primary
               "
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
             />
-          </div>
+            {errors.email && (
+              <p className='text-sm text-red-500 mb-3 p-2 rounded-lg text-center'>{errors.email.message}</p>
+            )}
 
           {/* PASSWORD */}
-          <div className="flex flex-col">
             <label className="text-sm text-start font-medium mb-1 text-foreground">Password</label>
             <input
+            {...register("password")}
               type="password"
               className="
                 w-full px-3 py-2 rounded-md
-                bg-card border border-border text-foreground
+                bg-card border border-border text-black bg-white text-foreground
                 focus:outline-none focus:ring-2 focus:ring-primary
               "
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
             />
-          </div>
+             {errors.password && (
+              <p className='text-sm text-red-500 mb-3 p-2 rounded-lg text-center'>{errors.password.message}</p>
+            )}
 
           {/* SUBMIT BUTTON */}
           <button
             type="submit"
-            disabled={loading}
+            disabled={isSubmitting}
             className="bg-amber-300 hover:bg-amber-400 px-10 rounded-lg text-black font-bold py-2 cursor-pointer"
           >
-            {loading ? <CircularProgress size={24} /> : 'Sign In'}
+            {isSubmitting ? <CircularProgress size={24} /> : 'Sign In'}
           </button>
         </form>
 
