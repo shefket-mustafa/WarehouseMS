@@ -9,6 +9,7 @@ export interface InventoryItem {
   qty: string;
   size: string;
   barcode: string;
+  brand: string;
 }
 
 export interface Order {

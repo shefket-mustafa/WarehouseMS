@@ -9,6 +9,7 @@ export interface InventoryItem extends Document {
   productName: string;
   category: string;
   subCategory?: string;
+  brand?: string;
   size?: string;
   code: string;
   barcode?: string;

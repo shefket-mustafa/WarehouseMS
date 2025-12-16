@@ -1,14 +1,14 @@
 import { useState } from 'react';
 import { TextField } from '@mui/material';
 import { FiSearch } from 'react-icons/fi';
-import { useData } from '../context/data/dataContext-hook';
+import { useInventory } from '../context/inventory/inventory-context-hook';
 
 
 const Dashboard = () => {
-  const { inventory } = useData()
   const [searchTerm, setSearchTerm] = useState('');
+  const {allItems} = useInventory();
 
-  const filteredInventory = inventory.filter((item) =>
+  const filteredInventory = allItems.filter((item) =>
     Object.values(item).some((value) =>
       value.toString().toLowerCase().includes(searchTerm.toLowerCase())
     )
@@ -71,18 +71,18 @@ const Dashboard = () => {
           </div>
 
           <div className="overflow-x-auto">
-            <table className="w-full">
+            <table className="w-full h-full overflow-y-auto">
               <thead className="bg-muted border-b border-border">
                 <tr>
                   <th className="px-4 py-3 text-left text-sm font-semibold text-foreground">Code</th>
                   <th className="px-4 py-3 text-left text-sm font-semibold text-foreground">Category</th>
                   <th className="px-4 py-3 text-left text-sm font-semibold text-foreground">Sub Category</th>
+                  <th className="px-4 py-3 text-left text-sm font-semibold text-foreground">Brand</th>
                   <th className="px-4 py-3 text-left text-sm font-semibold text-foreground">Product Name</th>
                   <th className="px-4 py-3 text-left text-sm font-semibold text-foreground">Qty</th>
                   <th className="px-4 py-3 text-left text-sm font-semibold text-foreground">Size</th>
                   <th className="px-4 py-3 text-left text-sm font-semibold text-foreground">Barcode</th>
                   <th className="px-4 py-3 text-left text-sm font-semibold text-foreground">Status</th>
-                  <th className="px-4 py-3 text-left text-sm font-semibold text-foreground">Suspended</th>
                 </tr>
               </thead>
               <tbody>
@@ -93,10 +93,11 @@ const Dashboard = () => {
                 )
                 
                 : filteredInventory.map((item, index) => (
-                  <tr key={index} className="border-b border-border hover:bg-accent transition-colors">
+                  <tr key={index} className="border-b border-border text-left hover:bg-accent transition-colors">
                     <td className="px-4 py-3 text-sm text-foreground">{item.code}</td>
                     <td className="px-4 py-3 text-sm text-foreground">{item.category}</td>
                     <td className="px-4 py-3 text-sm text-foreground">{item.subCategory}</td>
+                    <td className="px-4 py-3 text-sm text-foreground">{item.brand}</td>
                     <td className="px-4 py-3 text-sm text-foreground font-medium">{item.productName}</td>
                     <td className="px-4 py-3 text-sm text-foreground">{item.qty}</td>
                     <td className="px-4 py-3 text-sm text-foreground">{item.size}</td>

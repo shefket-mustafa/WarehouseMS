@@ -8,6 +8,11 @@ const inventorySchema = new Schema<InventoryItem>(
       required: true,
       trim: true,
     },
+      brand: {
+      type: String,
+      required: true,
+      trim: true,
+    },
     category: {
       type: String,
       required: true,

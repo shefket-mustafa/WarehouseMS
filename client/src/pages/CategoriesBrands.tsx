@@ -206,6 +206,16 @@ const {addItem} = useInventory();
           />
           {errors.productName && (<p className="text-sm text-red-500 text-center mb-3 p-1">{errors.productName.message}</p>)}
 
+          <label>Brand</label>
+          <input
+          {...register("brand")}
+            type="text"
+            placeholder="Brand"
+            className="border border-border round p-1 w-full text-sm focus:otline-none focus:ring-2 focus:ring-primary rounded-sm"
+          />
+          {errors.brand && (<p className="text-sm text-red-500 text-center mb-3 p-1">{errors.brand.message}</p>)}
+
+
           <label>Category</label>
           <input
           {...register("category")}
