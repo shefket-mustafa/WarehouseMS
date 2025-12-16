@@ -53,7 +53,7 @@ const navigate = useNavigate();
 
        localStorage.setItem("user", JSON.stringify({companyName: result.companyName, email: result.email}));
       localStorage.setItem("token", result.token);
-      setUser(result.companyName);
+      setUser({companyName: result.companyName, email: result.email});
 
       return result;
     } catch (err) {
