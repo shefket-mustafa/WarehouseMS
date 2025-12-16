@@ -6,11 +6,10 @@ export interface InventoryItem {
   category: string;
   subCategory: string;
   productName: string;
-  qty: number;
+  qty: string;
   size: string;
   barcode: string;
-  status: 'In Stock' | 'Low Stock' | 'Out of Stock';
-  suspended: boolean;
+  brand: string;
 }
 
 export interface Order {
@@ -54,63 +53,8 @@ export interface DataContextType {
 }
 
 // Sample data
-const sampleInventory: InventoryItem[] = [
-  {
-    code: 'WH001',
-    category: 'Electronics',
-    subCategory: 'Smartphones',
-    productName: 'iPhone 14 Pro',
-    qty: 45,
-    size: '256GB',
-    barcode: '1234567890123',
-    status: 'In Stock',
-    suspended: false,
-  },
-  {
-    code: 'WH002',
-    category: 'Electronics',
-    subCategory: 'Laptops',
-    productName: 'MacBook Pro M2',
-    qty: 12,
-    size: '16" 512GB',
-    barcode: '1234567890124',
-    status: 'Low Stock',
-    suspended: false,
-  },
-  {
-    code: 'WH003',
-    category: 'Furniture',
-    subCategory: 'Office Chairs',
-    productName: 'Ergonomic Office Chair',
-    qty: 0,
-    size: 'Standard',
-    barcode: '1234567890125',
-    status: 'Out of Stock',
-    suspended: false,
-  },
-  {
-    code: 'WH004',
-    category: 'Electronics',
-    subCategory: 'Tablets',
-    productName: 'iPad Air',
-    qty: 28,
-    size: '64GB',
-    barcode: '1234567890126',
-    status: 'In Stock',
-    suspended: false,
-  },
-  {
-    code: 'WH005',
-    category: 'Furniture',
-    subCategory: 'Desks',
-    productName: 'Standing Desk',
-    qty: 15,
-    size: '180x80cm',
-    barcode: '1234567890127',
-    status: 'In Stock',
-    suspended: false,
-  },
-];
+const sampleInventory: InventoryItem[] = []
+
 
 const sampleOrders: Order[] = [
   {

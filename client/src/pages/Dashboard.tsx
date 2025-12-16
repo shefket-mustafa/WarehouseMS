@@ -1,22 +1,21 @@
 import { useState } from 'react';
-import { TextField, MenuItem, Select, FormControl, InputLabel } from '@mui/material';
+import { TextField } from '@mui/material';
 import { FiSearch } from 'react-icons/fi';
-import { useData } from '../context/dataContext-hook';
+import { useInventory } from '../context/inventory/inventory-context-hook';
+
 
 const Dashboard = () => {
-  const { inventory } = useData();
   const [searchTerm, setSearchTerm] = useState('');
-  const [entriesPerPage, setEntriesPerPage] = useState(10);
+  const {allItems} = useInventory();
 
-  const filteredInventory = inventory.filter((item) =>
+  const filteredInventory = allItems.filter((item) =>
     Object.values(item).some((value) =>
       value.toString().toLowerCase().includes(searchTerm.toLowerCase())
     )
   );
 
-  const displayedInventory = filteredInventory.slice(0, entriesPerPage);
 
-  const getStatusColor = (status: string) => {
+  const getStatusColor = (status: string): string => {
     switch (status) {
       case 'In Stock':
         return 'bg-success/10 text-success';
@@ -28,6 +27,20 @@ const Dashboard = () => {
         return 'bg-muted text-muted-foreground';
     }
   };
+
+  const statusReturner = (qty: string | number): string => {
+    const quantity = Number(qty);
+
+    if(quantity <= 0){
+      return "Out of Stock"
+    } else if(quantity > 0 && quantity <= 50){
+      return "Low Stock"
+    } else {
+      return "In Stock"
+    }
+  }
+
+
 
   return (
     <div className="min-h-screen bg-background bg-white">
@@ -53,53 +66,48 @@ const Dashboard = () => {
             </div>
 
 
-            <FormControl size="small" className="ml-4! min-w-[150px]!">
-              <InputLabel>Show entries</InputLabel>
-              <Select
-                value={entriesPerPage}
-                label="Show entries"
-                onChange={(e) => setEntriesPerPage(Number(e.target.value))}
-              >
-                <MenuItem value={5}>5</MenuItem>
-                <MenuItem value={10}>10</MenuItem>
-                <MenuItem value={25}>25</MenuItem>
-                <MenuItem value={50}>50</MenuItem>
-              </Select>
-            </FormControl>
+            
             </div>
           </div>
 
           <div className="overflow-x-auto">
-            <table className="w-full">
+            <table className="w-full h-full overflow-y-auto">
               <thead className="bg-muted border-b border-border">
                 <tr>
                   <th className="px-4 py-3 text-left text-sm font-semibold text-foreground">Code</th>
                   <th className="px-4 py-3 text-left text-sm font-semibold text-foreground">Category</th>
                   <th className="px-4 py-3 text-left text-sm font-semibold text-foreground">Sub Category</th>
+                  <th className="px-4 py-3 text-left text-sm font-semibold text-foreground">Brand</th>
                   <th className="px-4 py-3 text-left text-sm font-semibold text-foreground">Product Name</th>
                   <th className="px-4 py-3 text-left text-sm font-semibold text-foreground">Qty</th>
                   <th className="px-4 py-3 text-left text-sm font-semibold text-foreground">Size</th>
                   <th className="px-4 py-3 text-left text-sm font-semibold text-foreground">Barcode</th>
                   <th className="px-4 py-3 text-left text-sm font-semibold text-foreground">Status</th>
-                  <th className="px-4 py-3 text-left text-sm font-semibold text-foreground">Suspended</th>
                 </tr>
               </thead>
               <tbody>
-                {displayedInventory.map((item, index) => (
-                  <tr key={index} className="border-b border-border hover:bg-accent transition-colors">
+                {filteredInventory.length === 0 ? (
+                  <tr>
+                    <td className='text-center text-red-500 text-sm mt-3 p-1'>Database is empty!</td> 
+                  </tr>
+                )
+                
+                : filteredInventory.map((item, index) => (
+                  <tr key={index} className="border-b border-border text-left hover:bg-accent transition-colors">
                     <td className="px-4 py-3 text-sm text-foreground">{item.code}</td>
                     <td className="px-4 py-3 text-sm text-foreground">{item.category}</td>
                     <td className="px-4 py-3 text-sm text-foreground">{item.subCategory}</td>
+                    <td className="px-4 py-3 text-sm text-foreground">{item.brand}</td>
                     <td className="px-4 py-3 text-sm text-foreground font-medium">{item.productName}</td>
                     <td className="px-4 py-3 text-sm text-foreground">{item.qty}</td>
                     <td className="px-4 py-3 text-sm text-foreground">{item.size}</td>
                     <td className="px-4 py-3 text-sm text-muted-foreground font-mono">{item.barcode}</td>
                     <td className="px-4 py-3">
-                      <span className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(item.status)}`}>
-                        {item.status}
+                      <span className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(statusReturner(item.qty))}`}>
+                        {statusReturner(item.qty)}
                       </span>
                     </td>
-                    <td className="px-4 py-3 text-sm text-foreground">{item.suspended ? 'Yes' : 'No'}</td>
+                    {/* <td className="px-4 py-3 text-sm text-foreground">{item.suspended ? 'Yes' : 'No'}</td> */}
                   </tr>
                 ))}
               </tbody>
@@ -107,7 +115,7 @@ const Dashboard = () => {
           </div>
 
           <div className="mt-4 text-sm text-muted-foreground">
-            Showing {displayedInventory.length} of {filteredInventory.length} entries
+            Showing {filteredInventory.length} of {filteredInventory.length} entries
           </div>
         </div>
       </div>

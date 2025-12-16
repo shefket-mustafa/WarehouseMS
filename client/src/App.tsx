@@ -1,7 +1,7 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import {  Routes, Route } from "react-router";
-import { AuthProvider } from "./context/AuthContext";
-import { DataProvider } from "./context/DataContext";
+import { AuthProvider } from "./context/auth/AuthContext";
+import { DataProvider } from "./context/data/DataContext";
 import Landing from "./pages/Landing";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
@@ -16,6 +16,7 @@ import MainLayout from "./layouts/MainLayout";
 import ScrollToTop from "./lib/ScrollToTop";
 import ProtectedRoute from "./components/ProtectedRoute";
 import ProtectedRouteForLoggedUsers from "./components/ProtectedRouteForLoggedUsers";
+import { InventoryProvider } from "./context/inventory/InventoryContext";
 
 const queryClient = new QueryClient();
 
@@ -24,6 +25,7 @@ const App = () => {
     <QueryClientProvider client={queryClient}>
       <ScrollToTop />
         <AuthProvider>
+          <InventoryProvider>
           <DataProvider>
             <MainLayout>
             <Routes>
@@ -87,6 +89,7 @@ const App = () => {
             </Routes>
             </MainLayout>
           </DataProvider>
+          </InventoryProvider>
         </AuthProvider>
     </QueryClientProvider>
   );

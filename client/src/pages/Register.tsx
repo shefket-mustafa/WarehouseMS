@@ -7,7 +7,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CircularProgress } from "@mui/material";
 import { FiPackage } from "react-icons/fi";
-import { useAuth } from "../context/authContext-hook";
+import { useAuth } from "../context/auth/authContext-hook";
 
 const Register = () => {
 

@@ -1,10 +1,10 @@
 import { Link } from 'react-router';
 import { CircularProgress } from '@mui/material';
 import { FiPackage } from 'react-icons/fi';
-import { useAuth } from '../context/authContext-hook';
 import {useForm} from "react-hook-form"
 import { loginSchema, type LoginSchemaType } from '../zod-validator/loginSchema';
 import {zodResolver} from "@hookform/resolvers/zod"
+import { useAuth } from '../context/auth/authContext-hook';
 
 const Login = () => {
   const { login } = useAuth();

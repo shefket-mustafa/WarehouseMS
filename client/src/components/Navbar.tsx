@@ -1,6 +1,6 @@
 import { Link, useLocation } from "react-router";
 import { FiPackage, FiLogOut } from "react-icons/fi";
-import { useAuth } from "../context/authContext-hook";
+import { useAuth } from "../context/auth/authContext-hook";
 
 const Navbar = () => {
   const { user, logout } = useAuth();
