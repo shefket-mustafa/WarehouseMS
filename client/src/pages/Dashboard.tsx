@@ -70,8 +70,8 @@ const Dashboard = () => {
             </div>
           </div>
 
-          <div className="overflow-x-auto">
-            <table className="w-full h-full overflow-y-auto">
+          <div className="overflow-y-scroll overflow-x-scroll max-h-80">
+            <table className="w-full ">
               <thead className="bg-muted border-b border-border">
                 <tr>
                   <th className="px-4 py-3 text-left text-sm font-semibold text-foreground">Code</th>
