@@ -48,7 +48,7 @@ const Navbar = () => {
 
           <div className="flex items-center gap-4">
             <div className="text-right">
-              <p className="text-xs text-muted-foreground">{user?.email}</p>
+              <p className="text-xs text-muted-foreground">{user?.companyName}</p>
             </div>
 
               {!user && (
@@ -67,6 +67,7 @@ const Navbar = () => {
               Register
             </Link>
               )}
+              {user && (
             <button
               onClick={logout}
               className="p-2 rounded-md hover:bg-accent text-foreground cursor-pointer hover:text-amber-300 transition-colors"
@@ -74,6 +75,7 @@ const Navbar = () => {
             >
               <FiLogOut className="w-5 h-5" />
             </button>
+              )}
           </div>
         </div>
       </div>

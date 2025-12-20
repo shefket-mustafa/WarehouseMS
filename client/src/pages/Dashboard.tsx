@@ -70,7 +70,7 @@ const Dashboard = () => {
             </div>
           </div>
 
-          <div className="overflow-y-scroll overflow-x-scroll max-h-80">
+          <div className="overflow-y-scroll overflow-x-scroll">
             <table className="w-full ">
               <thead className="bg-muted border-b border-border">
                 <tr>
