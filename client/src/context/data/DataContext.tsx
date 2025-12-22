@@ -51,7 +51,6 @@ export interface Brand {
 }
 
 export interface DataContextType {
-  inventory: InventoryItem[];
   orders: Order[];
   customers: Customer[];
   categories: Category[];
@@ -60,11 +59,11 @@ export interface DataContextType {
   brandItems: CategoryItem[];
   categoryClickHandler: (category: string) => void;
   brandsClickHandler: (brand: string) => void;
+  isCategoriesLoading: boolean;
+isBrandsLoading: boolean;
+isItemsLoading: boolean;
+
 }
-
-// Sample data
-const sampleInventory: InventoryItem[] = []
-
 
 const sampleOrders: Order[] = [
   {
@@ -128,7 +127,6 @@ const sampleCustomers: Customer[] = [
 
 
 export const DataProvider = ({ children }: { children: ReactNode }) => {
-  const [inventory] = useState<InventoryItem[]>(sampleInventory);
   const [orders] = useState<Order[]>(sampleOrders);
   const [customers] = useState<Customer[]>(sampleCustomers);
   const [categories, setCategories] = useState<Category[]>([]);
@@ -136,51 +134,69 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
   const [brands, setBrands] = useState<Brand[]>([]);
   const [brandItems, setBrandItems] = useState<CategoryItem[]>([]);
   const BASE_URL = import.meta.env.VITE_BASE_URL;
+  const [isCategoriesLoading, setCategoriesLoading] = useState(false)
+  const [isBrandsLoading, setBrandsLoading] = useState(false)
+  const [isItemsLoading, setItemsLoading] = useState(false)
 
   useEffect(() => {
-
-     fetch(`${BASE_URL}/inventory/categories`)
-    .then(res => res.json())
-    .then(data => {
-      console.log(data);
-      
-      setCategories(data)
-    })
+    setCategoriesLoading(true);
+    try{
+      fetch(`${BASE_URL}/inventory/categories`)
+     .then(res => res.json())
+     .then(data => {
+ 
+       setCategories(data)
+     })
+    }finally{
+      setCategoriesLoading(false)
+    }
   },[BASE_URL])
 
    useEffect(() => {
-
-     fetch(`${BASE_URL}/inventory/brands`)
-    .then(res => res.json())
-    .then(data => {
-      console.log(data);
-      
-      setBrands(data)
-    })
+    setBrandsLoading(true);
+try{
+  fetch(`${BASE_URL}/inventory/brands`)
+ .then(res => res.json())
+ .then(data => {
+   console.log(data);
+   
+   setBrands(data)
+ })
+}finally{
+  setBrandsLoading(false)
+}
   },[BASE_URL])
 
   const categoryClickHandler = async(category: string) => {
+    setItemsLoading(true);
+    try{
+      const res = await fetch(`${BASE_URL}/inventory/categories/${category}`)
+      const categoryItems = await res.json();
+  
+      setCategoryItems(categoryItems)
+      setBrandItems([]);
 
-    const res = await fetch(`${BASE_URL}/inventory/categories/${category}`)
-    const categoryItems = await res.json();
-
-    setCategoryItems(categoryItems)
-    setBrandItems([]);
+    }finally{
+      setItemsLoading(false)
+    }
   }
 
    const brandsClickHandler = async(brand: string) => {
-
-    const res = await fetch(`${BASE_URL}/inventory/brands/${brand}`)
-    const brandItems = await res.json();
-
-    setBrandItems(brandItems)
-    setCategoryItems([])
+    setItemsLoading(true);
+    try{
+      const res = await fetch(`${BASE_URL}/inventory/brands/${brand}`)
+      const brandItems = await res.json();
+  
+      setBrandItems(brandItems)
+      setCategoryItems([])
+    }finally{
+      setItemsLoading(false)
+    }
   }
 
   return (
     <DataContext.Provider 
     value={{ 
-      inventory, 
       orders, 
       customers, 
       categories, 
@@ -188,7 +204,11 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
       categoryClickHandler,
        brands, 
        brandItems,
-       brandsClickHandler
+       brandsClickHandler,
+       isBrandsLoading,
+       isCategoriesLoading,
+       isItemsLoading
+      
         }}>
       {children}
     </DataContext.Provider>

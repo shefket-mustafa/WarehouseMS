@@ -4,7 +4,8 @@ import type { InventoryItem } from "../data/DataContext";
 
 export type inventoryContextTypes = {
     addItem: (data: InventoryItem) => Promise<Response>
-    allItems: InventoryItem[]
+    allItems: InventoryItem[];
+    isDataLoading: boolean
 }
 
 

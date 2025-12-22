@@ -5,6 +5,7 @@ import type { InventoryItem } from "../data/DataContext";
 export const InventoryProvider = ({ children }: { children: ReactNode }) => {
   const BASE_URL = import.meta.env.VITE_BASE_URL;
   const [allItems, setAllItems] = useState<InventoryItem[]>([]);
+  const [isDataLoading, setIsDataLoading] = useState(false);
 
   const addItem = async (data: InventoryItem) => {
     console.log(BASE_URL);
@@ -19,13 +20,18 @@ export const InventoryProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const fetchItems = async () => {
-    const res = await fetch(`${BASE_URL}/inventory/getItems`);
-    if (!res.ok) {
-      console.log(res);
+    setIsDataLoading(true);
+    try{
+      const res = await fetch(`${BASE_URL}/inventory/getItems`);
+      if (!res.ok) {
+        console.log(res);
+      }
+  
+      const data = await res.json();
+      setAllItems(data);
+    }finally{
+      setIsDataLoading(false)
     }
-
-    const data = await res.json();
-    setAllItems(data);
   };
 
   useEffect(() => {
@@ -33,7 +39,7 @@ export const InventoryProvider = ({ children }: { children: ReactNode }) => {
   },[])
 
   return (
-    <InventoryContext.Provider value={{ addItem, allItems }}>
+    <InventoryContext.Provider value={{ addItem, allItems, isDataLoading }}>
       {children}
     </InventoryContext.Provider>
   );

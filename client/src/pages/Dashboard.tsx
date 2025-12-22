@@ -3,11 +3,12 @@ import { TextField } from '@mui/material';
 import { FiSearch } from 'react-icons/fi';
 import { useInventory } from '../context/inventory/inventory-context-hook';
 import { statusReturner } from '../helpers/helpers';
+import Loading from '../components/Loading';
 
 
 const Dashboard = () => {
   const [searchTerm, setSearchTerm] = useState('');
-  const {allItems} = useInventory();
+  const {allItems, isDataLoading} = useInventory();
 
   const filteredInventory = allItems.filter((item) =>
     Object.values(item).some((value) =>
@@ -77,7 +78,7 @@ const Dashboard = () => {
                 </tr>
               </thead>
               <tbody>
-                {filteredInventory.length === 0 ? (
+                {(filteredInventory.length === 0 && !isDataLoading) ? (
                   <tr>
                     <td className='text-center text-red-500 text-sm mt-3 p-1'>Database is empty!</td> 
                   </tr>
@@ -102,6 +103,7 @@ const Dashboard = () => {
                 ))}
               </tbody>
             </table>
+            <div className='flex justify-center items-center'>{isDataLoading && <Loading/>} </div>
           </div>
 
           <div className="mt-4 text-sm text-muted-foreground">
