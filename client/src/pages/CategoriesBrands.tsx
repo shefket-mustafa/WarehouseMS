@@ -15,8 +15,7 @@ import { statusReturner } from "../helpers/helpers";
       categoryClickHandler, 
       brands, 
       brandItems, 
-      brandsClickHandler ,
-      inventory,  } = useData();
+      brandsClickHandler} = useData();
       const {addItem} = useInventory();
     const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
     const [selectedBrand, setSelectedBrand] = useState<string | null>(null);
@@ -78,9 +77,9 @@ import { statusReturner } from "../helpers/helpers";
                       categoryClickHandler(category.name)
                       setSelectedBrand(null);
                     }}
-                    className={`w-full text-left p-4 rounded-lg border transition-colors ${
+                    className={`w-full text-left p-4 rounded-lg border transition-colors cursor-pointer ${
                       selectedCategory === category.name
-                        ? "bg-primary text-primary-foreground border-primary"
+                        ? "bg-slate-950 text-white border-primary"
                         : "bg-card border-border hover:bg-accent"
                     }`}
                   >
@@ -114,9 +113,9 @@ import { statusReturner } from "../helpers/helpers";
                       brandsClickHandler(brand.name)
                       setSelectedCategory(null);
                     }}
-                    className={`w-full text-left p-4 rounded-lg border transition-colors ${
+                    className={`w-full text-left p-4 rounded-lg border cursor-pointer transition-colors ${
                       selectedBrand === brand.name
-                        ? "bg-primary text-primary-foreground border-primary"
+                        ? "bg-slate-950 text-white border-primary"
                         : "bg-card border-border hover:bg-accent"
                     }`}
                   >
