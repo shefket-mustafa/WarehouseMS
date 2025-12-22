@@ -1,26 +1,26 @@
   import { useState } from "react";
   import { FiTag, FiAward } from "react-icons/fi";
-  import type { InventoryItem } from "../context/data/DataContext";
+  import type { CategoryItem, InventoryItem } from "../context/data/DataContext";
   import { useForm } from "react-hook-form";
   import { zodResolver } from "@hookform/resolvers/zod";
   import { inventoryItemSchema } from "../zod-validator/inventoryItemSchema";
   import { useData } from "../context/data/dataContext-hook";
   import { useInventory } from "../context/inventory/inventory-context-hook";
+import { statusReturner } from "../helpers/helpers";
 
   const CategoriesBrands = () => {
-    const { categories, brands, inventory } = useData();
+    const { 
+      categories, 
+      categoryItems, 
+      categoryClickHandler, 
+      brands, 
+      brandItems, 
+      brandsClickHandler ,
+      inventory,  } = useData();
+      const {addItem} = useInventory();
     const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
     const [selectedBrand, setSelectedBrand] = useState<string | null>(null);
-  const {addItem} = useInventory();
-    const filteredItems = inventory.filter((item: InventoryItem) => {
-      if (selectedCategory && item.category !== selectedCategory) return false;
-      if (
-        selectedBrand &&
-        !item.productName.toLowerCase().includes(selectedBrand.toLowerCase())
-      )
-        return false;
-      return true;
-    });
+   const items = selectedCategory ? categoryItems : brandItems;
 
     const { handleSubmit, setError, register, formState: {isSubmitting, errors}, reset } = useForm({
       resolver: zodResolver(inventoryItemSchema),
@@ -44,6 +44,7 @@
         }
       }
     };
+    
 
     return (
       <div className="relative min-h-screen bg-background bg-white">
@@ -74,6 +75,7 @@
                       setSelectedCategory(
                         category.name === selectedCategory ? null : category.name
                       );
+                      categoryClickHandler(category.name)
                       setSelectedBrand(null);
                     }}
                     className={`w-full text-left p-4 rounded-lg border transition-colors ${
@@ -104,11 +106,12 @@
               <div className="space-y-2">
                 {brands.map((brand) => (
                   <button
-                    key={brand.id}
+                    key={brand.name}
                     onClick={() => {
                       setSelectedBrand(
                         brand.name === selectedBrand ? null : brand.name
                       );
+                      brandsClickHandler(brand.name)
                       setSelectedCategory(null);
                     }}
                     className={`w-full text-left p-4 rounded-lg border transition-colors ${
@@ -148,6 +151,9 @@
                         Product Name
                       </th>
                       <th className="px-4 py-3 text-left text-sm font-semibold text-foreground">
+                        Brand
+                      </th>
+                      <th className="px-4 py-3 text-left text-sm font-semibold text-foreground">
                         Category
                       </th>
                       <th className="px-4 py-3 text-left text-sm font-semibold text-foreground">
@@ -159,7 +165,7 @@
                     </tr>
                   </thead>
                   <tbody>
-                    {filteredItems.map((item: InventoryItem, index: number) => (
+                    {items.map((item: CategoryItem, index: number) => (
                       <tr
                         key={index}
                         className="border-b border-border hover:bg-accent transition-colors"
@@ -170,15 +176,18 @@
                         <td className="px-4 py-3 text-sm font-medium text-foreground">
                           {item.productName}
                         </td>
+                        <td className="px-4 py-3 text-sm font-medium text-foreground">
+                          {item.brand}
+                        </td>
                         <td className="px-4 py-3 text-sm text-foreground">
                           {item.category}
                         </td>
                         <td className="px-4 py-3 text-sm text-foreground">
                           {item.qty}
                         </td>
-                        {/* <td className="px-4 py-3 text-sm text-foreground">
-                          {item.status}
-                        </td> */}
+                        <td className="px-4 py-3 text-sm text-foreground">
+                          {statusReturner(item.qty)}
+                        </td>
                       </tr>
                     ))}
                   </tbody>

@@ -37,8 +37,15 @@ export interface Category {
   itemCount: number;
 }
 
+export interface CategoryItem {
+  code: string;
+  productName: string;
+  brand: string;
+  category: string;
+  qty: number;
+}
+
 export interface Brand {
-  id: string;
   name: string;
   itemCount: number;
 }
@@ -48,7 +55,11 @@ export interface DataContextType {
   orders: Order[];
   customers: Customer[];
   categories: Category[];
+  categoryItems: CategoryItem[];
   brands: Brand[];
+  brandItems: CategoryItem[];
+  categoryClickHandler: (category: string) => void;
+  brandsClickHandler: (brand: string) => void;
 }
 
 // Sample data
@@ -116,19 +127,14 @@ const sampleCustomers: Customer[] = [
 ];
 
 
-const sampleBrands: Brand[] = [
-  { id: 'BRD001', name: 'Apple', itemCount: 45 },
-  { id: 'BRD002', name: 'Samsung', itemCount: 38 },
-  { id: 'BRD003', name: 'Herman Miller', itemCount: 22 },
-  { id: 'BRD004', name: 'Dell', itemCount: 31 },
-];
-
 export const DataProvider = ({ children }: { children: ReactNode }) => {
   const [inventory] = useState<InventoryItem[]>(sampleInventory);
   const [orders] = useState<Order[]>(sampleOrders);
   const [customers] = useState<Customer[]>(sampleCustomers);
   const [categories, setCategories] = useState<Category[]>([]);
-  const [brands] = useState<Brand[]>(sampleBrands);
+  const [categoryItems, setCategoryItems] = useState<CategoryItem[]>([]);
+  const [brands, setBrands] = useState<Brand[]>([]);
+  const [brandItems, setBrandItems] = useState<CategoryItem[]>([]);
   const BASE_URL = import.meta.env.VITE_BASE_URL;
 
   useEffect(() => {
@@ -142,8 +148,48 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
     })
   },[BASE_URL])
 
+   useEffect(() => {
+
+     fetch(`${BASE_URL}/inventory/brands`)
+    .then(res => res.json())
+    .then(data => {
+      console.log(data);
+      
+      setBrands(data)
+    })
+  },[BASE_URL])
+
+  const categoryClickHandler = async(category: string) => {
+
+    const res = await fetch(`${BASE_URL}/inventory/categories/${category}`)
+    const categoryItems = await res.json();
+
+    setCategoryItems(categoryItems)
+    setBrandItems([]);
+  }
+
+   const brandsClickHandler = async(brand: string) => {
+
+    const res = await fetch(`${BASE_URL}/inventory/brands/${brand}`)
+    const brandItems = await res.json();
+
+    setBrandItems(brandItems)
+    setCategoryItems([])
+  }
+
   return (
-    <DataContext.Provider value={{ inventory, orders, customers, categories, brands }}>
+    <DataContext.Provider 
+    value={{ 
+      inventory, 
+      orders, 
+      customers, 
+      categories, 
+      categoryItems, 
+      categoryClickHandler,
+       brands, 
+       brandItems,
+       brandsClickHandler
+        }}>
       {children}
     </DataContext.Provider>
   );

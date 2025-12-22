@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { TextField } from '@mui/material';
 import { FiSearch } from 'react-icons/fi';
 import { useInventory } from '../context/inventory/inventory-context-hook';
+import { statusReturner } from '../helpers/helpers';
 
 
 const Dashboard = () => {
@@ -28,17 +29,7 @@ const Dashboard = () => {
     }
   };
 
-  const statusReturner = (qty: string | number): string => {
-    const quantity = Number(qty);
-
-    if(quantity <= 0){
-      return "Out of Stock"
-    } else if(quantity > 0 && quantity <= 50){
-      return "Low Stock"
-    } else {
-      return "In Stock"
-    }
-  }
+ 
 
 
 
@@ -107,7 +98,6 @@ const Dashboard = () => {
                         {statusReturner(item.qty)}
                       </span>
                     </td>
-                    {/* <td className="px-4 py-3 text-sm text-foreground">{item.suspended ? 'Yes' : 'No'}</td> */}
                   </tr>
                 ))}
               </tbody>
