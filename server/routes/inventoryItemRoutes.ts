@@ -22,6 +22,37 @@ try{
 }
 });
 
+itemRoutes.get("/categories", async(req: Request, res: Response) => {
+
+    try{
+        const categories = await InventoryModel.aggregate([
+
+            {
+                $group: {
+                    _id: "$category",
+                    itemCount: {$sum: 1}
+                },
+            },
+
+            {
+                $project: {
+                    _id: 0,
+                    name: "$_id",
+                    itemCount: 1
+                },
+            },
+
+            {
+                $sort: {name: 1}
+            }
+        ])
+
+        return res.json(categories);
+    }catch(err){
+        return res.status(500).json({message: "Internal server error!"})
+    }
+})
+
 // itemRoutes.patch("/editItems", async(req:Request, res:Response) => {
 
 //     try{

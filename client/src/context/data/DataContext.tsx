@@ -1,4 +1,4 @@
-import {  useState, type ReactNode } from 'react';
+import {  useEffect, useState, type ReactNode } from 'react';
 import { DataContext } from './dataContext-hook';
 
 export interface InventoryItem {
@@ -33,7 +33,6 @@ export interface Customer {
 }
 
 export interface Category {
-  id: string;
   name: string;
   itemCount: number;
 }
@@ -116,12 +115,6 @@ const sampleCustomers: Customer[] = [
   },
 ];
 
-const sampleCategories: Category[] = [
-  { id: 'CAT001', name: 'Electronics', itemCount: 125 },
-  { id: 'CAT002', name: 'Furniture', itemCount: 68 },
-  { id: 'CAT003', name: 'Office Supplies', itemCount: 342 },
-  { id: 'CAT004', name: 'Clothing', itemCount: 89 },
-];
 
 const sampleBrands: Brand[] = [
   { id: 'BRD001', name: 'Apple', itemCount: 45 },
@@ -134,8 +127,20 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
   const [inventory] = useState<InventoryItem[]>(sampleInventory);
   const [orders] = useState<Order[]>(sampleOrders);
   const [customers] = useState<Customer[]>(sampleCustomers);
-  const [categories] = useState<Category[]>(sampleCategories);
+  const [categories, setCategories] = useState<Category[]>([]);
   const [brands] = useState<Brand[]>(sampleBrands);
+  const BASE_URL = import.meta.env.VITE_BASE_URL;
+
+  useEffect(() => {
+
+     fetch(`${BASE_URL}/inventory/categories`)
+    .then(res => res.json())
+    .then(data => {
+      console.log(data);
+      
+      setCategories(data)
+    })
+  },[BASE_URL])
 
   return (
     <DataContext.Provider value={{ inventory, orders, customers, categories, brands }}>
