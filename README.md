@@ -50,15 +50,59 @@ You can use the following test credentials:
 
 ---
 
+## 🚀 Getting Started Locally
+
+Follow the steps below to run the project on your local machine.
+
+### 1️⃣ Clone the repository
+
+git clone git@github.com:shefket-mustafa/WarehouseMS.git
+
+### 2️⃣ Navigate to the project folder
+
+cd WarehouseMS
+
+### 3️⃣ Start the client (Frontend)
+
+cd client
+npm install
+npm run dev
+
+The frontend will start on:
+http://localhost:5173
+
+### 4️⃣ Start the server (Backend)
+
+Open a new terminal, then run:
+
+cd server
+npm install
+npm run dev
+
+The backend API will start on:
+http://localhost:3000
+
+---
+
+### ⚠️ Environment Variables
+
+Make sure you have the required environment variables set (e.g. database connection, API URLs).
+
+---
+
+### 🧪 Test Account
+
+Email: test@abv.bg  
+Password: 123456
 
 
 
 ---
 ## 📌 Project Goals
 
+- Create a project that can be used in real-world
 - Practice **real-world React patterns**
 - Build a **scalable Context API architecture**
-- Create a project that can be used in real-world
 - Follow **clean code and component separation**
 
 ---
