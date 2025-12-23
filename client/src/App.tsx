@@ -17,6 +17,7 @@ import ScrollToTop from "./lib/ScrollToTop";
 import ProtectedRoute from "./components/ProtectedRoute";
 import ProtectedRouteForLoggedUsers from "./components/ProtectedRouteForLoggedUsers";
 import { InventoryProvider } from "./context/inventory/InventoryContext";
+import Admin from "./pages/Admin";
 
 const queryClient = new QueryClient();
 
@@ -58,6 +59,14 @@ const App = () => {
                 element={
                   <ProtectedRoute>
                     <Orders />
+                  // </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/admin"
+                element={
+                  <ProtectedRoute>
+                    <Admin />
                   // </ProtectedRoute>
                 }
               />
