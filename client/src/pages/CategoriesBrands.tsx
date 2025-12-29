@@ -315,19 +315,6 @@ const CategoriesBrands = () => {
             </p>
           )}
 
-          <label>Code</label>
-          <input
-            {...register("code")}
-            type="text"
-            placeholder="Product Name"
-            className="border border-border round p-1 w-full text-sm focus:otline-none focus:ring-2 focus:ring-primary rounded-sm"
-          />
-          {errors.code && (
-            <p className="text-sm text-red-500 text-center mb-3 p-1">
-              {errors.code.message}
-            </p>
-          )}
-
           <label>Barcode</label>
           <input
             {...register("barcode")}

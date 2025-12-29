@@ -1,5 +1,6 @@
 import { Request, Response, Router } from "express";
 import { InventoryModel } from "../model/InventoryItem.js";
+import generateCode from "../lib/helpers.js";
 
 export const itemRoutes = Router();
 
@@ -13,7 +14,11 @@ itemRoutes.get("/getItems", async(req: Request, res: Response) => {
 itemRoutes.post("/addItems", async (req: Request, res: Response) => {
   
 try{
-    const createdItem =  await InventoryModel.create(req.body);
+    const item = {
+        ...req.body,
+        code: generateCode()
+    }
+    const createdItem =  await InventoryModel.create(item);
 
     return res.json({message: "Item added successfully", item: createdItem})
 

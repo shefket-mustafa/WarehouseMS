@@ -2,7 +2,6 @@ import {  useEffect, useState, type ReactNode } from 'react';
 import { DataContext } from './dataContext-hook';
 
 export interface InventoryItem {
-  code: string;
   category: string;
   subCategory: string;
   productName: string;
