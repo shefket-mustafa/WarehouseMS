@@ -6,6 +6,7 @@ export interface InventoryItem {
   category: string;
   subCategory: string;
   productName: string;
+  price: string
   qty: string;
   size: string;
   barcode: string;

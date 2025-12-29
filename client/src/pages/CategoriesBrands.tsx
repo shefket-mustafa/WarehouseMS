@@ -170,6 +170,9 @@ const CategoriesBrands = () => {
                     <th className="px-4 py-3 text-left text-sm font-semibold text-foreground">
                       Brand
                     </th>
+                     <th className="px-4 py-3 text-left text-sm font-semibold text-foreground">
+                      Price
+                    </th>
                     <th className="px-4 py-3 text-left text-sm font-semibold text-foreground">
                       Category
                     </th>
@@ -257,6 +260,19 @@ const CategoriesBrands = () => {
           {errors.brand && (
             <p className="text-sm text-red-500 text-center mb-3 p-1">
               {errors.brand.message}
+            </p>
+          )}
+
+           <label>Price</label>
+          <input
+            {...register("price")}
+            type="text"
+            placeholder="Price"
+            className="border border-border round p-1 w-full text-sm focus:otline-none focus:ring-2 focus:ring-primary rounded-sm"
+          />
+          {errors.price && (
+            <p className="text-sm text-red-500 text-center mb-3 p-1">
+              {errors.price.message}
             </p>
           )}
 
