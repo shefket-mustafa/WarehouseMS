@@ -68,6 +68,15 @@ if (Number.isNaN(qty) || qty <= 0) {
 const product = items.find(i => i.code === productCode);
 if (!product) return;
 
+ const alreadyAddedQty =
+    addedOrderItems.find(i => i.code === product.code)?.qty ?? 0;
+    const remainingQty = product.qty - alreadyAddedQty;
+
+if(qty > remainingQty){
+  alert(`Only ${remainingQty} items left in stock`);
+  return
+}
+
  setAddedOrderItems(prev => {
   const existing = prev.find(i => i.code === product.code);
 
@@ -98,6 +107,12 @@ if (!product) return;
 
     
   }
+
+  const subtotal = addedOrderItems.reduce((sum, item) => sum + item.total, 0);
+  const VAT_RATE = 0.20;
+  const vat = subtotal * VAT_RATE;
+  const totalWithVat = subtotal + vat;
+  
 
  
   return (
@@ -150,7 +165,7 @@ if (!product) return;
 
     {items.map(item => (
       <option key={item.code} value={item.code}>
-        {item.productName} – {item.size}
+        {item.productName} – {item.size} - {item.qty}pcs
       </option>
     ))}
   </select>
@@ -191,15 +206,22 @@ if (!product) return;
     <span>{item.productName}</span>
     <span>{item.size}</span>
     <span>{item.qty}</span>
-    <span>{item.price}</span>
-    <span>{item.total}</span>
+    <span>{item.price}$</span>
+    <span>{item.total.toFixed(2)}$</span>
   </div>
+
 ))}
+
+<div className="border-b">
+<h1 className="">Total with VAT</h1>
+  <p>{totalWithVat.toFixed(2)}$</p>
+
+</div>
 
       </div>
   </div>
 
-    <button type="button" className="px-6 py-2 hover:bg-slate-100 cursor-pointer border w-72 rounded">
+    <button onClick={() => setAddedOrderItems([])} type="button" className="px-6 py-2 hover:bg-slate-100 cursor-pointer border w-72 rounded">
       Cancel
     </button>
     <button type="submit" className="px-6 py-2 w-72 cursor-pointer hover:bg-slate-700 transition-colors bg-slate-900 text-white rounded">
