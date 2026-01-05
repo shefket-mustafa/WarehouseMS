@@ -1,12 +1,15 @@
 import dotenv from "dotenv";
+dotenv.config();
 import express from "express";
 import mongoose from "mongoose";
 import { authRoutes } from "./routes/authRoutes.js";
 import cors from "cors"
 import { itemRoutes } from "./routes/inventoryItemRoutes.js";
 
+import pool from "./db/postgres.js";
 
-dotenv.config();
+
+
 const app = express();
 app.use(express.json());
 app.use(cors())
@@ -16,6 +19,12 @@ app.use("/inventory", itemRoutes);
 
 const PORT = process.env.PORT || 3000;
 const MONGO_URI = process.env.MONGO_URI;
+
+(async () => {
+    const res = await pool.query("SELECT 1;")
+    console.log("POSTGRES OK", res.rows);
+    
+})()
 
 app.get("/", (req: express.Request, res: express.Response) => {
     res.send("API is running..")
