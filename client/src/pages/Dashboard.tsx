@@ -74,6 +74,7 @@ const Dashboard = () => {
                   <th className="px-4 py-3 text-left text-sm font-semibold text-foreground">Qty</th>
                   <th className="px-4 py-3 text-left text-sm font-semibold text-foreground">Size</th>
                   <th className="px-4 py-3 text-left text-sm font-semibold text-foreground">Barcode</th>
+                  <th className="px-4 py-3 text-left text-sm font-semibold text-foreground">Price</th>
                   <th className="px-4 py-3 text-left text-sm font-semibold text-foreground">Status</th>
                 </tr>
               </thead>
@@ -94,6 +95,7 @@ const Dashboard = () => {
                     <td className="px-4 py-3 text-sm text-foreground">{item.qty}</td>
                     <td className="px-4 py-3 text-sm text-foreground">{item.size}</td>
                     <td className="px-4 py-3 text-sm text-muted-foreground font-mono">{item.barcode}</td>
+                    <td className="px-4 py-3 text-sm text-muted-foreground font-mono">{item.price}$</td>
                     <td className="px-4 py-3">
                       <span className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(statusReturner(item.qty))}`}>
                         {statusReturner(item.qty)}

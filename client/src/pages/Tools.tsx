@@ -5,13 +5,13 @@ import jsPDF from 'jspdf';
 import { useData } from '../context/data/dataContext-hook';
 
 const Tools = () => {
-  const { orders, inventory } = useData();
+  const { orders } = useData();
   const [pdfTitle, setPdfTitle] = useState('');
   const [pdfContent, setPdfContent] = useState('');
 
   const totalOrders = orders.length;
   const totalOnlineOrders = orders.filter(order => order.status !== 'Pending').length;
-  const totalProducts = inventory.length;
+  const totalProducts = orders.length;
   const totalProductImages = 0; // Placeholder
 
   const generatePDF = () => {

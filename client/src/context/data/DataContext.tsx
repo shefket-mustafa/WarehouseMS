@@ -2,10 +2,10 @@ import {  useEffect, useState, type ReactNode } from 'react';
 import { DataContext } from './dataContext-hook';
 
 export interface InventoryItem {
-  code: string;
   category: string;
   subCategory: string;
   productName: string;
+  price: string
   qty: string;
   size: string;
   barcode: string;
@@ -65,39 +65,6 @@ isItemsLoading: boolean;
 
 }
 
-const sampleOrders: Order[] = [
-  {
-    id: 'ORD001',
-    shopName: 'Tech Store NYC',
-    email: 'contact@techstore.com',
-    address: '123 Broadway, New York, NY 10001',
-    total: 2499.99,
-    vat: 249.99,
-    orderDate: '2025-11-28',
-    status: 'Delivered',
-  },
-  {
-    id: 'ORD002',
-    shopName: 'Office Solutions LA',
-    email: 'orders@officesolutions.com',
-    address: '456 Main St, Los Angeles, CA 90012',
-    total: 1299.99,
-    vat: 129.99,
-    orderDate: '2025-11-29',
-    status: 'Shipped',
-  },
-  {
-    id: 'ORD003',
-    shopName: 'Gadget World',
-    email: 'info@gadgetworld.com',
-    address: '789 Tech Ave, San Francisco, CA 94102',
-    total: 899.99,
-    vat: 89.99,
-    orderDate: '2025-11-30',
-    status: 'Processing',
-  },
-];
-
 const sampleCustomers: Customer[] = [
   {
     id: 'CUST001',
@@ -127,7 +94,7 @@ const sampleCustomers: Customer[] = [
 
 
 export const DataProvider = ({ children }: { children: ReactNode }) => {
-  const [orders] = useState<Order[]>(sampleOrders);
+  const [orders] = useState<Order[]>([]);
   const [customers] = useState<Customer[]>(sampleCustomers);
   const [categories, setCategories] = useState<Category[]>([]);
   const [categoryItems, setCategoryItems] = useState<CategoryItem[]>([]);
