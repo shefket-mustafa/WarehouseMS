@@ -6,7 +6,18 @@ export interface InventoryItem {
   subCategory: string;
   productName: string;
   price: string
-  qty: string;
+  quantity: string;
+  size: string;
+  barcode: string;
+  brand: string;
+}
+export interface DashboardItem {
+  code: string;
+  category: string;
+  sub_category: string;
+  product_name: string;
+  price: number;
+  quantity: string;
   size: string;
   barcode: string;
   brand: string;
@@ -37,12 +48,23 @@ export interface Category {
   itemCount: number;
 }
 
+export interface InventoryFormInput {
+  product_name: string;
+  category: string;
+  sub_category: string;
+  size: string;
+  barcode: string;
+  quantity: string;
+  brand: string;
+  price: string;
+}
+
 export interface CategoryItem {
   code: string;
-  productName: string;
+  product_name: string;
   brand: string;
   category: string;
-  qty: number;
+  quantity: number;
 }
 
 export interface Brand {
@@ -105,10 +127,17 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
   const [isBrandsLoading, setBrandsLoading] = useState(false)
   const [isItemsLoading, setItemsLoading] = useState(false)
 
+  const token = localStorage.getItem("token");
+
   useEffect(() => {
     setCategoriesLoading(true);
     try{
-      fetch(`${BASE_URL}/inventory/categories`)
+      fetch(`${BASE_URL}/inventory/categories`, {
+        headers: {
+          "Content-Type":"application/json",
+          "Authorization": `Bearer ${token}`
+        }
+      })
      .then(res => res.json())
      .then(data => {
  
@@ -122,7 +151,11 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
    useEffect(() => {
     setBrandsLoading(true);
 try{
-  fetch(`${BASE_URL}/inventory/brands`)
+  fetch(`${BASE_URL}/inventory/brands`, {
+    headers: {"Content-Type":"application/json", 
+      "Authorization": `Bearer ${token}`
+    }
+  })
  .then(res => res.json())
  .then(data => {
    console.log(data);
@@ -137,7 +170,11 @@ try{
   const categoryClickHandler = async(category: string) => {
     setItemsLoading(true);
     try{
-      const res = await fetch(`${BASE_URL}/inventory/categories/${category}`)
+      const res = await fetch(`${BASE_URL}/inventory/categories/${category}`, {
+         headers: {"Content-Type":"application/json", 
+      "Authorization": `Bearer ${token}`
+    }
+      })
       const categoryItems = await res.json();
   
       setCategoryItems(categoryItems)
@@ -151,7 +188,11 @@ try{
    const brandsClickHandler = async(brand: string) => {
     setItemsLoading(true);
     try{
-      const res = await fetch(`${BASE_URL}/inventory/brands/${brand}`)
+      const res = await fetch(`${BASE_URL}/inventory/brands/${brand}`, {
+         headers: {"Content-Type":"application/json", 
+      "Authorization": `Bearer ${token}`
+    }
+      })
       const brandItems = await res.json();
   
       setBrandItems(brandItems)

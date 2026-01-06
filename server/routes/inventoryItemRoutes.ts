@@ -1,141 +1,142 @@
 import { Request, Response, Router } from "express";
 import { InventoryModel } from "../model/InventoryItem.js";
 import generateCode from "../lib/helpers.js";
+import pool from "../db/postgres.js";
+import { authMiddleware } from "../middlewares/authMiddleware.js";
 
 export const itemRoutes = Router();
 
-itemRoutes.get("/getItems", async(req: Request, res: Response) => {
+itemRoutes.get(
+  "/getItems",
+  authMiddleware,
+  async (req: Request, res: Response) => {
+    const companyId = res.locals.companyId;
 
-    const items = await InventoryModel.find();
+    const items = await pool.query(
+      "SELECT * FROM inventory_items WHERE company_id = $1",
+      [companyId]
+    );
 
-    return res.json(items)
-})
+    return res.json(items.rows || []);
+  }
+);
 
-itemRoutes.post("/addItems", async (req: Request, res: Response) => {
-  
-try{
-    const item = {
-        ...req.body,
-        code: generateCode()
+itemRoutes.post(
+  "/addItems",
+  authMiddleware,
+  async (req: Request, res: Response) => {
+    const companyId = res.locals.companyId;
+
+    try {
+      const {
+        product_name,
+        category,
+        sub_category,
+        size,
+        barcode,
+        quantity,
+        brand,
+        price,
+      } = req.body;
+
+      const result = await pool.query(
+        "INSERT INTO inventory_items(code,  product_name, category, sub_category, size, barcode, quantity, brand, price, company_id) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)",
+        [generateCode(), product_name, category, sub_category, size, barcode, quantity, brand, price, companyId]
+      );
+
+      return res.json({
+        message: "Item added successfully",
+        item: result.rows[0],
+      });
+    } catch (err) {
+         console.error(err);
+      return res.status(500).json({ message: "Failed to add item!" });
     }
-    const createdItem =  await InventoryModel.create(item);
+  }
+);
 
-    return res.json({message: "Item added successfully", item: createdItem})
+itemRoutes.get(
+  "/categories",
+  authMiddleware,
+  async (req: Request, res: Response) => {
+    const companyId = res.locals.companyId;
+    try {
+      const categories = await pool.query(
+        `SELECT category AS name, COUNT(*)::int AS "itemCount"
+        FROM inventory_items WHERE company_id = $1 GROUP BY category ORDER BY category`,
+        [companyId]
+      );
 
-}catch(err){
-    return res.status(500).json({message: "Internal server error!"})
-}
-});
-
-itemRoutes.get("/categories", async(req: Request, res: Response) => {
-
-    try{
-        const categories = await InventoryModel.aggregate([
-
-            {
-                $group: {
-                    _id: "$category",
-                    itemCount: {$sum: 1}
-                },
-            },
-
-            {
-                $project: {
-                    _id: 0,
-                    name: "$_id",
-                    itemCount: 1
-                },
-            },
-
-            {
-                $sort: {name: 1}
-            }
-        ])
-
-        return res.json(categories);
-    }catch(err){
-        return res.status(500).json({message: "Internal server error!"})
+      return res.json(categories.rows || []);
+    } catch (err) {
+      return res.status(500).json({ message: "Internal server error!" });
     }
-})
+  }
+);
 
-itemRoutes.get("/brands", async(req: Request, res: Response) => {
+itemRoutes.get(
+  "/brands",
+  authMiddleware,
+  async (req: Request, res: Response) => {
+    const companyId = res.locals.companyId;
 
-    try{
-        const brands = await InventoryModel.aggregate([
+    try {
+      const brands = await pool.query(
+        `SELECT brand AS name, COUNT(*)::int AS "itemCount"
+        FROM inventory_items WHERE company_id = $1 GROUP BY brand ORDER BY brand`,
+        [companyId]
+      );
 
-            {
-                $group: {
-                    _id: "$brand",
-                    itemCount: {$sum: 1}
-                },
-            },
-
-            {
-                $project: {
-                    _id: 0,
-                    name: "$_id",
-                    itemCount: 1
-                },
-            },
-
-            {
-                $sort: {name: 1}
-            }
-        ])
-
-        return res.json(brands);
-    }catch(err){
-        return res.status(500).json({message: "Internal server error!"})
+      return res.json(brands.rows || []);
+    } catch (err) {
+      return res.status(500).json({ message: "Internal server error!" });
     }
-})
+  }
+);
 
-itemRoutes.get("/categories/:category", async(req: Request, res: Response) => {
+itemRoutes.get(
+  "/categories/:category",
+  authMiddleware,
+  async (req: Request, res: Response) => {
+    const { category } = req.params;
+    const companyId = res.locals.companyId;
 
-    try{
+    try {
+      const result = await pool.query(
+        "SELECT code, product_name, brand, category, quantity FROM inventory_items WHERE company_id = $1 AND category = $2",
+        [companyId, category]
+      );
 
-        const {category} = req.params;
+      if (result.rows.length === 0) {
+        return res.json([]);
+      }
 
-        if(!category){
-            return res.status(400).json({message: "Category is required!"})
-        }
-        
-        const categoryItems = await InventoryModel.find({category})
-
-        return res.json(categoryItems)
-
-
-    }catch(err){
-        return res.status(500).json({message: "Internal server error!"})
+      return res.json(result.rows);
+    } catch (err) {
+      return res.status(500).json({ message: "Internal server error!" });
     }
-})
+  }
+);
 
-itemRoutes.get("/brands/:brand", async(req: Request, res: Response) => {
+itemRoutes.get(
+  "/brands/:brand",
+  authMiddleware,
+  async (req: Request, res: Response) => {
+    const { brand } = req.params;
+    const companyId = res.locals.companyId;
 
-    try{
+    try {
+      const brandExists = await pool.query(
+        "SELECT code, product_name, brand, category, quantity FROM inventory_items WHERE company_id = $1 AND brand = $2",
+        [companyId, brand]
+      );
+      if (brandExists.rows.length === 0) {
+        return res.status(400).json({ message: "Brand is required!" });
+      }
 
-        const {brand} = req.params;
-
-        if(!brand){
-            return res.status(400).json({message: "Brand is required!"})
-        }
-        
-        const brandItems = await InventoryModel.find({brand})
-
-        return res.json(brandItems)
-
-
-    }catch(err){
-        return res.status(500).json({message: "Internal server error!"})
+      return res.json(brandExists.rows || []);
+    } catch (err) {
+      return res.status(500).json({ message: "Internal server error!" });
     }
-})
-
-// itemRoutes.patch("/editItems", async(req:Request, res:Response) => {
-
-//     try{
-//         const whatToEdit = req.body;
-
-
-//     }catch(err){
-//         return res.status(500).json({message: "Internal server error!"})
-//     }
-// })
+  }
+);
