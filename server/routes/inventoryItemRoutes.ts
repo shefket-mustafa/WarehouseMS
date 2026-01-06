@@ -1,5 +1,4 @@
 import { Request, Response, Router } from "express";
-import { InventoryModel } from "../model/InventoryItem.js";
 import generateCode from "../lib/helpers.js";
 import pool from "../db/postgres.js";
 import { authMiddleware } from "../middlewares/authMiddleware.js";
