@@ -89,16 +89,16 @@ const Dashboard = () => {
                   <tr key={index} className="border-b border-border text-left hover:bg-accent transition-colors">
                     <td className="px-4 py-3 text-sm text-foreground">{item.code}</td>
                     <td className="px-4 py-3 text-sm text-foreground">{item.category}</td>
-                    <td className="px-4 py-3 text-sm text-foreground">{item.subCategory}</td>
+                    <td className="px-4 py-3 text-sm text-foreground">{item.sub_category}</td>
                     <td className="px-4 py-3 text-sm text-foreground">{item.brand}</td>
-                    <td className="px-4 py-3 text-sm text-foreground font-medium">{item.productName}</td>
-                    <td className="px-4 py-3 text-sm text-foreground">{item.qty}</td>
+                    <td className="px-4 py-3 text-sm text-foreground font-medium">{item.product_name}</td>
+                    <td className="px-4 py-3 text-sm text-foreground">{item.quantity}</td>
                     <td className="px-4 py-3 text-sm text-foreground">{item.size}</td>
                     <td className="px-4 py-3 text-sm text-muted-foreground font-mono">{item.barcode}</td>
                     <td className="px-4 py-3 text-sm text-muted-foreground font-mono">{item.price}$</td>
                     <td className="px-4 py-3">
-                      <span className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(statusReturner(item.qty))}`}>
-                        {statusReturner(item.qty)}
+                      <span className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(statusReturner(item.quantity))}`}>
+                        {statusReturner(item.quantity)}
                       </span>
                     </td>
                   </tr>

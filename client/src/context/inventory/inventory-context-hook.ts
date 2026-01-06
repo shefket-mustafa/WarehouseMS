@@ -1,10 +1,10 @@
 
 import { createContext, useContext } from "react";
-import type { InventoryItem } from "../data/DataContext";
+import type { DashboardItem, InventoryFormInput } from "../data/DataContext";
 
 export type inventoryContextTypes = {
-    addItem: (data: InventoryItem) => Promise<Response>
-    allItems: InventoryItem[];
+    addItem: (data: InventoryFormInput) => Promise<Response>
+    allItems: DashboardItem[];
     isDataLoading: boolean
 }
 

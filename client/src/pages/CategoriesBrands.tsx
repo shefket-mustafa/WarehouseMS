@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { FiTag, FiAward } from "react-icons/fi";
-import type { CategoryItem, InventoryItem } from "../context/data/DataContext";
+import type { CategoryItem, InventoryFormInput } from "../context/data/DataContext";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { inventoryItemSchema } from "../zod-validator/inventoryItemSchema";
@@ -32,11 +32,11 @@ const CategoriesBrands = () => {
     register,
     formState: { isSubmitting, errors },
     reset,
-  } = useForm({
+  } = useForm<InventoryFormInput>({
     resolver: zodResolver(inventoryItemSchema),
   });
 
-  const handleAddItem = async (data: InventoryItem) => {
+  const handleAddItem = async (data: InventoryFormInput) => {
     try {
       const result = await addItem(data);
 
@@ -170,9 +170,6 @@ const CategoriesBrands = () => {
                     <th className="px-4 py-3 text-left text-sm font-semibold text-foreground">
                       Brand
                     </th>
-                     <th className="px-4 py-3 text-left text-sm font-semibold text-foreground">
-                      Price
-                    </th>
                     <th className="px-4 py-3 text-left text-sm font-semibold text-foreground">
                       Category
                     </th>
@@ -188,13 +185,13 @@ const CategoriesBrands = () => {
                   {items.map((item: CategoryItem, index: number) => (
                     <tr
                       key={index}
-                      className="border-b border-border hover:bg-accent transition-colors"
+                      className="border-b border-border text-left hover:bg-accent transition-colors"
                     >
                       <td className="px-4 py-3 text-sm text-foreground">
                         {item.code}
                       </td>
                       <td className="px-4 py-3 text-sm font-medium text-foreground">
-                        {item.productName}
+                        {item.product_name}
                       </td>
                       <td className="px-4 py-3 text-sm font-medium text-foreground">
                         {item.brand}
@@ -203,10 +200,10 @@ const CategoriesBrands = () => {
                         {item.category}
                       </td>
                       <td className="px-4 py-3 text-sm text-foreground">
-                        {item.qty}
+                        {item.quantity}
                       </td>
                       <td className="px-4 py-3 text-sm text-foreground">
-                        {statusReturner(item.qty)}
+                        {statusReturner(item.quantity)}
                       </td>
                     </tr>
                   ))}
@@ -239,14 +236,14 @@ const CategoriesBrands = () => {
           )}
           <label>Product Name</label>
           <input
-            {...register("productName")}
+            {...register("product_name")}
             type="text"
             placeholder="Product Name"
             className="border border-border round p-1 w-full text-sm focus:otline-none focus:ring-2 focus:ring-primary rounded-sm"
           />
-          {errors.productName && (
+          {errors.product_name && (
             <p className="text-sm text-red-500 text-center mb-3 p-1">
-              {errors.productName.message}
+              {errors.product_name.message}
             </p>
           )}
 
@@ -291,14 +288,14 @@ const CategoriesBrands = () => {
 
           <label>Sub Category</label>
           <input
-            {...register("subCategory")}
+            {...register("sub_category")}
             type="text"
             placeholder="Sub Category"
             className="border border-border round p-1 w-full text-sm focus:otline-none focus:ring-2 focus:ring-primary rounded-sm"
           />
-          {errors.subCategory && (
+          {errors.sub_category && (
             <p className="text-sm text-red-500 text-center mb-3 p-1">
-              {errors.subCategory.message}
+              {errors.sub_category.message}
             </p>
           )}
 
@@ -330,14 +327,14 @@ const CategoriesBrands = () => {
 
           <label>Quantity</label>
           <input
-            {...register("qty")}
+            {...register("quantity")}
             type="text"
             placeholder="Quantity"
             className="border border-border round p-1 w-full text-sm focus:otline-none focus:ring-2 focus:ring-primary rounded-sm"
           />
-          {errors.qty && (
+          {errors.quantity && (
             <p className="text-sm text-red-500 text-center mb-3 p-1">
-              {errors.qty.message}
+              {errors.quantity.message}
             </p>
           )}
 
